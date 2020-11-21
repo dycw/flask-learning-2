@@ -1,2 +1,3 @@
+bootstrap-flask == 1.5.*
 flask == 1.1.*
 gitpython == 3.1.*
