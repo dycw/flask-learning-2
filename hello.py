@@ -1,20 +1,26 @@
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Any
 from typing import Tuple
 
 from flask import Flask
 from flask import render_template
 from flask_bootstrap import Bootstrap
+from flask_moment import Moment
 
 
 app = Flask(__name__)
 bootstrap = Bootstrap(app)
+moment = Moment(app)
 
 
 @app.route("/")
 def index() -> str:
-    return render_template("index.html")
+    return render_template(
+        "index.html",
+        current_time=datetime.utcnow(),
+    )
 
 
 @app.route("/user/<name>")
