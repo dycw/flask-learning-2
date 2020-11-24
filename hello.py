@@ -3,12 +3,18 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any
 from typing import Tuple
+from typing import Union
 
+from flask import flash
 from flask import Flask
+from flask import redirect
 from flask import render_template
+from flask import session
+from flask import url_for
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
+from werkzeug import Response
 from wtforms import StringField
 from wtforms import SubmitField
 from wtforms.validators import DataRequired
@@ -21,18 +27,22 @@ moment = Moment(app)
 
 
 @app.route("/", methods=["GET", "POST"])
-def index() -> str:
-    name = None
+def index() -> Union[str, Response]:
     form = NameForm()
+    old_name = session.get("name")
     if form.validate_on_submit():
-        name = form.name.data
-        form.name.data = ""
-    return render_template(
-        "index.html",
-        current_time=datetime.utcnow(),
-        form=form,
-        name=name,
-    )
+        new_name = form.name.data
+        if (old_name is not None) and (old_name != new_name):
+            flash("Looks like you have changed your name!")
+        session["name"] = new_name
+        return redirect(url_for("index"))
+    else:
+        return render_template(
+            "index.html",
+            current_time=datetime.utcnow(),
+            form=form,
+            name=old_name,
+        )
 
 
 @app.route("/user/<name>")
