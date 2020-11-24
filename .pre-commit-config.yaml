@@ -1,8 +1,8 @@
 repos:
-  - repo: https://github.com/andreoliwa/nitpick
-    rev: v0.23.1
-    hooks:
-      - id: nitpick
+  #  - repo: https://github.com/andreoliwa/nitpick
+  #    rev: v0.23.1
+  #    hooks:
+  #      - id: nitpick
 
   - repo: https://github.com/asottile/add-trailing-comma
     rev: v2.0.1
