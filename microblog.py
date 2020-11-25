@@ -1,4 +1,6 @@
 from __future__ import annotations
 
+from app import app
 
-__version__ = "0.0.3"
+
+_ = app
