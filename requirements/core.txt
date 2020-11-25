@@ -1,6 +1,10 @@
-bootstrap-flask == 1.5.*
+# bootstrap-flask == 1.5.*
 flask == 1.1.*
-# flask-bootstrap == 3.3.*
+flask-bootstrap == 3.3.*
+flask-mail == 0.9.*
+flask-migrate == 2.5.*
 flask-moment == 0.10.*
+flask-sqlalchemy == 2.4.*
 flask-wtf == 0.14.*
 gitpython == 3.1.*
+python-dotenv == 0.15.*
