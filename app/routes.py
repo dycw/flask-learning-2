@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+from typing import Union
+
+from flask import flash
+from flask import redirect
 from flask import render_template
+from werkzeug import Response
 
 from app import app
 from app.forms import LoginForm
@@ -28,7 +33,14 @@ def index() -> str:
     )
 
 
-@app.route("/login")
-def login() -> str:
+@app.route("/login", methods=["GET", "POST"])
+def login() -> Union[str, Response]:
     form = LoginForm()
-    return render_template("login.html", title="Sign In", form=form)
+    if form.validate_on_submit():
+        flash(
+            f"Login requested for user {form.username.data},"
+            f"remember_me={form.remember_me.data}",
+        )
+        return redirect("/index")
+    else:
+        return render_template("login.html", title="Sign In", form=form)
