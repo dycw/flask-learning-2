@@ -8,6 +8,7 @@ from flask import render_template
 from flask import url_for
 from flask_login import current_user
 from flask_login import login_user
+from flask_login import logout_user
 from werkzeug import Response
 
 from app import app
@@ -53,3 +54,9 @@ def login() -> Union[str, Response]:
                 return redirect(url_for("index"))
         else:
             return render_template("login.html", title="Sign In", form=form)
+
+
+@app.route("/logout")
+def logout() -> Response:
+    logout_user()
+    return redirect(url_for("index"))
