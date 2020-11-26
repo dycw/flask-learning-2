@@ -136,4 +136,4 @@ dmypy.json
 .idea/**/shelf
 
 # Flasky
-flasky/
+app.db
