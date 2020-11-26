@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
+
 from app import db
 
 
@@ -14,6 +17,12 @@ class User(db.Model):  # type: ignore
 
     def __repr__(self: User) -> str:
         return f"<User {self.username}>"
+
+    def set_password(self: User, password: str) -> None:
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self: User, password: str) -> bool:
+        return check_password_hash(self.password_hash, password)
 
 
 class Post(db.Model):  # type: ignore
