@@ -2,13 +2,15 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from flask_login import UserMixin
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 from app import db
+from app import login
 
 
-class User(db.Model):  # type: ignore
+class User(UserMixin, db.Model):  # type: ignore
     id = db.Column(db.Integer, primary_key=True)  # noqa: A003
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -33,3 +35,8 @@ class Post(db.Model):  # type: ignore
 
     def __repr__(self: Post) -> str:
         return f"<Post {self.body}>"
+
+
+@login.user_loader  # type: ignore
+def load_user(id: str) -> User:  # noqa: A002
+    return User.query.get(int(id))
