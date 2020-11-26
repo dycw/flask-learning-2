@@ -30,14 +30,15 @@ class RegistrationForm(FlaskForm):
     )
     submit = SubmitField("Register")
 
-    def validate_username(self: RegistrationForm, username: str) -> None:
-        raise TypeError(type(username))
+    def validate_username(
+        self: RegistrationForm,
+        username: StringField,
+    ) -> None:
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError("Please use a different username.")
 
-    def validate_email(self: RegistrationForm, email: str) -> None:
-        raise TypeError(type(email))
+    def validate_email(self: RegistrationForm, email: StringField) -> None:
         user = User.query.filter_by(email=email.data).first()
         if user is not None:
             raise ValidationError("Please use a different email address.")

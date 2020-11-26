@@ -17,7 +17,9 @@ from werkzeug import Response
 from werkzeug.urls import url_parse
 
 from app import app
+from app import db
 from app.forms import LoginForm
+from app.forms import RegistrationForm
 from app.models import User
 from utilities import T
 
@@ -69,3 +71,20 @@ def login() -> Union[str, Response]:
 def logout() -> Response:
     logout_user()
     return redirect(url_for("index"))
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register() -> Union[str, Response]:
+    if current_user.is_authenticated:
+        return redirect(url_for("index"))
+    else:
+        form = RegistrationForm()
+        if form.validate_on_submit():
+            user = User(username=form.username.data, email=form.email.data)
+            user.set_password(form.password.data)
+            db.session.add(user)
+            db.session.commit()
+            flash("Congratulations, you are now a registered user!")
+            return redirect(url_for("login"))
+        else:
+            return render_template("register.html", title="Register", form=form)
