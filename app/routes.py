@@ -7,12 +7,14 @@ from typing import Union
 from flask import flash
 from flask import redirect
 from flask import render_template
+from flask import request
 from flask import url_for
 from flask_login import current_user
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
 from werkzeug import Response
+from werkzeug.urls import url_parse
 
 from app import app
 from app.forms import LoginForm
@@ -24,7 +26,6 @@ from utilities import T
 @app.route("/index")
 @cast(Callable[[T], T], login_required)
 def index() -> str:
-    user = {"username": "Miguel"}
     posts = [
         {
             "author": {"username": "John"},
@@ -38,7 +39,6 @@ def index() -> str:
     return render_template(
         "index.html",
         title="Home",
-        user=user,
         posts=posts,
     )
 
@@ -56,7 +56,11 @@ def login() -> Union[str, Response]:
                 return redirect(url_for("login"))
             else:
                 login_user(user, remember=form.remember_me.data)
-                return redirect(url_for("index"))
+                next_page = request.args.get("next")
+                if (not next_page) or (url_parse(next_page).netloc != ""):
+                    return redirect(url_for("index"))
+                else:
+                    return redirect(next_page)
         else:
             return render_template("login.html", title="Sign In", form=form)
 
