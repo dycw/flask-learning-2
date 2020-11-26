@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+from hashlib import md5
 from typing import Callable
 from typing import cast
 
@@ -22,6 +23,12 @@ class User(UserMixin, db.Model):  # type: ignore
 
     def __repr__(self: User) -> str:
         return f"<User {self.username}>"
+
+    def avatar(self: User, size: int) -> str:
+        digest = md5(  # noqa: S303
+            self.email.lower().encode("utf-8"),
+        ).hexdigest()
+        return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
 
     def set_password(self: User, password: str) -> None:
         self.password_hash = generate_password_hash(password)
