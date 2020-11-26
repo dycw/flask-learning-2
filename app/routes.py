@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Callable
+from typing import cast
 from typing import Union
 
 from flask import flash
@@ -7,6 +9,7 @@ from flask import redirect
 from flask import render_template
 from flask import url_for
 from flask_login import current_user
+from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
 from werkzeug import Response
@@ -14,10 +17,12 @@ from werkzeug import Response
 from app import app
 from app.forms import LoginForm
 from app.models import User
+from utilities import T
 
 
 @app.route("/")
 @app.route("/index")
+@cast(Callable[[T], T], login_required)
 def index() -> str:
     user = {"username": "Miguel"}
     posts = [

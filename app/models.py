@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from datetime import datetime
+from typing import Callable
+from typing import cast
 
 from flask_login import UserMixin
 from werkzeug.security import check_password_hash
@@ -8,6 +10,7 @@ from werkzeug.security import generate_password_hash
 
 from app import db
 from app import login
+from utilities import T
 
 
 class User(UserMixin, db.Model):  # type: ignore
@@ -37,6 +40,6 @@ class Post(db.Model):  # type: ignore
         return f"<Post {self.body}>"
 
 
-@login.user_loader  # type: ignore
+@cast(Callable[[T], T], login.user_loader)
 def load_user(id: str) -> User:  # noqa: A002
     return User.query.get(int(id))
