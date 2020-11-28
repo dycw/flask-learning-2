@@ -13,6 +13,7 @@ from flask_login import current_user
 from flask_login import login_required
 from flask_login import login_user
 from flask_login import logout_user
+from IPython.utils.tz import utcnow
 from werkzeug import Response
 from werkzeug.urls import url_parse
 
@@ -99,3 +100,10 @@ def user(username: str) -> str:
         {"author": user, "body": "Test post #2"},
     ]
     return render_template("user.html", user=user, posts=posts)
+
+
+@app.before_request
+def before_request() -> None:
+    if current_user.is_authenticated:
+        current_user.last_seen = utcnow()
+        db.session.commit()
