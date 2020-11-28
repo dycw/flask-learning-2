@@ -24,7 +24,7 @@ login = LoginManager(app)
 login.login_view = "login"
 
 
-if not app.debug:
+if not app.debug or True:
     if app.config["MAIL_SERVER"]:
         if app.config["MAIL_USERNAME"] or app.config["MAIL_PASSWORD"]:
             auth: Optional[Tuple[str, str]] = (
