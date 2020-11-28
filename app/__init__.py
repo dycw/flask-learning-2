@@ -21,6 +21,7 @@ login.login_view = "login"
 
 from app import models  # noqa: E402
 from app import routes  # noqa: E402
+from app import errors  # noqa: E402
 
 
-_ = (models, routes)
+_ = (errors, models, routes)
