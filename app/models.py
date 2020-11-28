@@ -6,6 +6,7 @@ from typing import Callable
 from typing import cast
 
 from flask_login import UserMixin
+from flask_sqlalchemy import BaseQuery
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
@@ -68,6 +69,18 @@ class User(UserMixin, db.Model):  # type: ignore
             ).count()
             > 0
         )
+
+    def followed_posts(self: User) -> BaseQuery:
+        followed = (
+            Post.query.join(
+                followers,
+                followers.c.followed_id == Post.user_id,
+            )
+            .filter(followers.c.follower_id == self.id)
+            .order_by(Post.timestamp.desc())
+        )
+        own = Post.query.filter_by(user_id=self.id)
+        return followed.union(own).order_by(Post.timestamp.desc())
 
 
 class Post(db.Model):  # type: ignore
