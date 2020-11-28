@@ -8,4 +8,5 @@ style = "https://raw.githubusercontent.com/dycw/nitpick/master/nitpick-style.tom
 [tool.pytest.ini_options]
 addopts = "-rsxX -v --color=yes --cov-config=setup.cfg --cov-report=html --durations=5"
 minversion = "6.0"
+looponfailroots = "app migrations tests"
 testpaths = "tests"
