@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 from flask_wtf import FlaskForm
 from wtforms import BooleanField
 from wtforms import PasswordField
@@ -53,3 +55,18 @@ class EditProfileForm(FlaskForm):
         validators=[Length(min=0, max=140)],
     )
     submit = SubmitField("Submit")
+
+    def __init__(
+        self: EditProfileForm,
+        original_username: StringField,
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.original_username = original_username
+
+    def validate_username(self: EditProfileForm, username: StringField) -> None:
+        if username.data != self.original_username:
+            user = User.query.filter_by(username=self.username.data).first()
+            if user is not None:
+                raise ValidationError("Please use a different username.")
