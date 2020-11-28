@@ -1,7 +1,11 @@
 from __future__ import annotations
 
 from logging import ERROR
+from logging import Formatter
+from logging import INFO
+from logging.handlers import RotatingFileHandler
 from logging.handlers import SMTPHandler
+from pathlib import Path
 from typing import Optional
 from typing import Tuple
 
@@ -47,6 +51,23 @@ if not app.debug or True:
         )
         mail_handler.setLevel(ERROR)
         app.logger.addHandler(mail_handler)
+
+    if not (path := Path("logs")).exists():
+        path.mkdir()
+    file_handler = RotatingFileHandler(
+        "logs/microblog.log",
+        maxBytes=10240,
+        backupCount=10,
+    )
+    file_handler.setFormatter(
+        Formatter(
+            "%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]",
+        ),
+    )
+    file_handler.setLevel(INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(INFO)
+    app.logger.info("Microblog startup")
 
 
 from app import models  # noqa: E402
