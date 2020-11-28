@@ -53,6 +53,22 @@ class User(UserMixin, db.Model):  # type: ignore
     def check_password(self: User, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
 
+    def follow(self: User, user: User) -> None:
+        if not self.is_following(user):
+            self.followed.append(user)
+
+    def unfollow(self: User, user: User) -> None:
+        if self.is_following(user):
+            self.followed.remove(user)
+
+    def is_following(self: User, user: User) -> bool:
+        return (
+            self.followed.filter(
+                followers.c.followed_id == user.id,
+            ).count()
+            > 0
+        )
+
 
 class Post(db.Model):  # type: ignore
     id = db.Column(db.Integer, primary_key=True)  # noqa: A003
