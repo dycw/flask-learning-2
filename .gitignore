@@ -135,5 +135,6 @@ dmypy.json
 .idea/**/dictionaries
 .idea/**/shelf
 
-# Flasky
+# Flask
 app.db
+logs/
