@@ -16,6 +16,7 @@
       <excludePattern pattern="build" />
       <excludePattern pattern="dist" />
       <excludePattern pattern="htmlcov" />
+      <excludePattern pattern="logs" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.8 (flask-learning-2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
