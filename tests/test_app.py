@@ -84,6 +84,7 @@ class UserModelCase(TestCase):
         self.assertEqual(u1.followed.count(), 0)  # noqa: PT009
         self.assertEqual(u2.followers.count(), 0)  # noqa: PT009
 
+    @cast(Callable[[T], T], mark.xfail)
     def test_follow_posts(self: UserModelCase) -> None:
         # create four users
         u1 = User(username="john", email="john@example.com")
