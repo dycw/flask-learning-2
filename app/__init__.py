@@ -17,7 +17,7 @@ from flask_sqlalchemy import SQLAlchemy
 from config import Config
 
 
-__version__ = "0.0.10"
+__version__ = "0.0.11"
 
 
 app = Flask(__name__)
