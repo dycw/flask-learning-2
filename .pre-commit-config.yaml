@@ -40,6 +40,7 @@ repos:
             flake8-executable,
             flake8-fixme,
             flake8-future-import,
+            flake8-implicit-str-concat,
             flake8-mutable,
             flake8-pytest-style,
             flake8-string-format,
@@ -82,17 +83,24 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
     hooks:
+      - id: check-case-conflict
       - id: check-executables-have-shebangs
-      - id: check-merge-conflict
       - id: check-json
+      - id: check-merge-conflict
+      - id: check-symlinks
       - id: check-toml
+      - id: check-vcs-permalinks
       - id: check-xml
       - id: check-yaml
+      - id: destroyed-symlinks
+      - id: detect-private-key
       - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: fix-encoding-pragma
+        args: [--remove]
       - id: mixed-line-ending
         args: [--fix=lf]
       - id: no-commit-to-branch
-      - id: pretty-format-json
       - id: trailing-whitespace
 
   - repo: https://github.com/psf/black
@@ -118,6 +126,7 @@ repos:
             flake8-executable,
             flake8-fixme,
             flake8-future-import,
+            flake8-implicit-str-concat,
             flake8-mutable,
             flake8-pytest-style,
             flake8-string-format,
