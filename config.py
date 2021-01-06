@@ -18,7 +18,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_SERVER = environ.get("MAIL_SERVER") or "smtp.googlemail.com"
     MAIL_PORT = int(environ.get("MAIL_PORT") or 587)
-    MAIL_USE_TLS = (environ.get("MAIL_USE_TLS") is not None) or True
+    MAIL_USE_TLS = environ.get("MAIL_USE_TLS") is not None
     MAIL_USERNAME = environ.get("MAIL_USERNAME") or "derek.wan.test2@gmail.com"
     MAIL_PASSWORD = environ.get("MAIL_PASSWORD") or "lewis wet sucks luke"
     ADMINS = ["d.wan@icloud.com"]

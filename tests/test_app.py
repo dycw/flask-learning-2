@@ -32,7 +32,7 @@ def test_avatar() -> None:
 
 
 @cast(Callable[[T], T], mark.skip)
-def test_follow(db_session: scoped_session) -> None:
+def test_follow_pytest_version(db_session: scoped_session) -> None:
     u1 = User(username="john", email="john@example.com")
     u2 = User(username="susan", email="susan@example.com")
     db_session.add(u1)
@@ -84,7 +84,7 @@ class UserModelCase(TestCase):
         self.assertEqual(u1.followed.count(), 0)  # noqa: PT009
         self.assertEqual(u2.followers.count(), 0)  # noqa: PT009
 
-    @cast(Callable[[T], T], mark.xfail)
+    @cast(Callable[[T], T], mark.xfail(reason="Broken for now"))
     def test_follow_posts(self: UserModelCase) -> None:
         # create four users
         u1 = User(username="john", email="john@example.com")
