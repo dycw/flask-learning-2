@@ -23,7 +23,7 @@ followers = db.Table(
 
 
 class User(UserMixin, db.Model):  # type: ignore
-    id = db.Column(db.Integer, primary_key=True)  # noqa:VNE003
+    id = db.Column(db.Integer, primary_key=True)  # noqa:A003
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
@@ -84,7 +84,7 @@ class User(UserMixin, db.Model):  # type: ignore
 
 
 class Post(db.Model):  # type: ignore
-    id = db.Column(db.Integer, primary_key=True)  # noqa:VNE003
+    id = db.Column(db.Integer, primary_key=True)  # noqa:A003
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -94,5 +94,5 @@ class Post(db.Model):  # type: ignore
 
 
 @cast(Callable[[T], T], login.user_loader)
-def load_user(id: str) -> User:  # noqa:VNE003
+def load_user(id: str) -> User:  # noqa:A002
     return User.query.get(int(id))
