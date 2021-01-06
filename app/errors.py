@@ -10,7 +10,7 @@ from app import db
 
 
 @app.errorhandler(404)
-def not_found_error(error: NotFound) -> Tuple[str, int]:  # noqa: U100
+def not_found_error(error: NotFound) -> Tuple[str, int]:  # noqa:U100
     return render_template("404.html"), 404
 
 

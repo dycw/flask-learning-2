@@ -28,7 +28,7 @@ login = LoginManager(app)
 login.login_view = "login"
 
 
-if not app.debug or True:
+if not app.debug:
     if app.config["MAIL_SERVER"]:
         if app.config["MAIL_USERNAME"] or app.config["MAIL_PASSWORD"]:
             auth: Optional[Tuple[str, str]] = (
@@ -70,9 +70,9 @@ if not app.debug or True:
     app.logger.info("Microblog startup")
 
 
-from app import models  # noqa: E402
-from app import routes  # noqa: E402
-from app import errors  # noqa: E402
+from app import models  # noqa:E402
+from app import routes  # noqa:E402
+from app import errors  # noqa:E402
 
 
 _ = (errors, models, routes)
