@@ -29,11 +29,11 @@ repos:
         additional_dependencies:
           [
             dlint,
-            flake8-aaa,
             flake8-absolute-import,
             flake8-annotations,
             flake8-bandit,
             flake8-bugbear,
+            flake8-builtins,
             flake8-class-attributes-order,
             flake8-commas,
             flake8-comprehensions,
@@ -42,7 +42,6 @@ repos:
             flake8-executable,
             flake8-fine-pytest,
             flake8-fixme,
-            flake8-functions,
             flake8-future-import,
             flake8-implicit-str-concat,
             flake8-mutable,
@@ -53,7 +52,6 @@ repos:
             flake8-todo,
             flake8-typing-imports,
             flake8-unused-arguments,
-            flake8-variables-names,
             pep8-naming,
           ]
 
@@ -124,11 +122,11 @@ repos:
         additional_dependencies:
           [
             dlint,
-            flake8-aaa,
             flake8-absolute-import,
             flake8-annotations,
             flake8-bandit,
             flake8-bugbear,
+            flake8-builtins,
             flake8-class-attributes-order,
             flake8-commas,
             flake8-comprehensions,
@@ -137,7 +135,6 @@ repos:
             flake8-executable,
             flake8-fine-pytest,
             flake8-fixme,
-            flake8-functions,
             flake8-future-import,
             flake8-implicit-str-concat,
             flake8-mutable,
@@ -148,6 +145,5 @@ repos:
             flake8-todo,
             flake8-typing-imports,
             flake8-unused-arguments,
-            flake8-variables-names,
             pep8-naming,
           ]
