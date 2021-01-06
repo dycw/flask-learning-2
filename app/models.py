@@ -23,7 +23,7 @@ followers = db.Table(
 
 
 class User(UserMixin, db.Model):  # type: ignore
-    id = db.Column(db.Integer, primary_key=True)  # noqa: A003
+    id = db.Column(db.Integer, primary_key=True)  # noqa:VNE003
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
@@ -39,11 +39,8 @@ class User(UserMixin, db.Model):  # type: ignore
         lazy="dynamic",
     )
 
-    def __repr__(self: User) -> str:
-        return f"<User {self.username}>"
-
     def avatar(self: User, size: int) -> str:
-        digest = md5(  # noqa: S303
+        digest = md5(  # noqa:DUO130,S303
             self.email.lower().encode("utf-8"),
         ).hexdigest()
         return f"https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}"
@@ -82,9 +79,12 @@ class User(UserMixin, db.Model):  # type: ignore
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.timestamp.desc())
 
+    def __repr__(self: User) -> str:
+        return f"<User {self.username}>"
+
 
 class Post(db.Model):  # type: ignore
-    id = db.Column(db.Integer, primary_key=True)  # noqa: A003
+    id = db.Column(db.Integer, primary_key=True)  # noqa:VNE003
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -94,5 +94,5 @@ class Post(db.Model):  # type: ignore
 
 
 @cast(Callable[[T], T], login.user_loader)
-def load_user(id: str) -> User:  # noqa: A002
+def load_user(id: str) -> User:  # noqa:VNE003
     return User.query.get(int(id))
